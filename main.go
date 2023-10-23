@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	"gocrypt/gocrypt"
+	"goboxcrypt/goboxcrypt"
 )
 
 func main() {
@@ -10,8 +10,8 @@ func main() {
 	key := "3c45886ac87483a37dbc34ce7bf1fc99917a5ea8c9ba0ebab8a2d42a84d18c98"
 
 	// encryption based on algo with Sbox swaps
-	cipher_Sbox := gocrypt.Encrypt_Sbox(plainText, key)
-	backtoPlane := gocrypt.Decrypt_Sbox(cipher_Sbox, key)
+	cipher_Sbox := goboxcrypt.Encrypt_Sbox(plainText, key)
+	backtoPlane := goboxcrypt.Decrypt_Sbox(cipher_Sbox, key)
 	fmt.Println("cipher -> ", cipher_Sbox)
 	fmt.Println("plain text -> ", backtoPlane)
 	/*
@@ -20,8 +20,8 @@ func main() {
 	*/
 
 	// encryption based on algo with Pbox swaps, more interesting version
-	cipher_Pbox := gocrypt.Encrypt_Pbox(plainText, key)
-	backtoPlane = gocrypt.Decrypt_Pbox(cipher_Pbox, key)
+	cipher_Pbox := goboxcrypt.Encrypt_Pbox(plainText, key)
+	backtoPlane = goboxcrypt.Decrypt_Pbox(cipher_Pbox, key)
 	fmt.Println("cipher -> ", cipher_Sbox)
 	fmt.Println("plain text -> ", backtoPlane)
 	/*

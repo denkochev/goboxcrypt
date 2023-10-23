@@ -1,4 +1,4 @@
-package gocrypt
+package goboxcrypt
 
 import (
 	"encoding/csv"
