@@ -20,8 +20,8 @@ func main() {
 	*/
 
 	// encryption based on algo with Pbox swaps, more interesting version
-	cipher_Sbox = gocrypt.Encrypt_Pbox(plainText, key)
-	backtoPlane = gocrypt.Decrypt_Pbox(cipher_Sbox, key)
+	cipher_Pbox := gocrypt.Encrypt_Pbox(plainText, key)
+	backtoPlane = gocrypt.Decrypt_Pbox(cipher_Pbox, key)
 	fmt.Println("cipher -> ", cipher_Sbox)
 	fmt.Println("plain text -> ", backtoPlane)
 	/*
