@@ -4,30 +4,72 @@ import (
 	"fmt"
 )
 
-func Encrypt_Pbox(plainText string) string {
+// Будь-ласка використовуйте Hex значення для ваших ключів
+func Encrypt_Pbox(plainText, key string) string {
+	if len(key)%2 != 0 {
+		key = "0" + key
+	}
+
 	var cipherText string
 
 	blocks := splitIntoBlocks(plainText, "plain")
+	blocksOfKey := splitIntoBlocks(key, "cipher")
 
+	rounds := len(blocksOfKey)
+
+	// перемішування блоків та XOR з наступними блоками ключа
+	for i := 0; i < rounds; i++ {
+		for j := 0; j < len(blocks); j++ {
+			if i != 0 {
+				blocks[j] = Permutate_P_box(blocks[j], "in") ^ blocksOfKey[i]
+			} else {
+				// перший раунд -> операція XOR для першого блоку ключа для всіх блоків тексту без пермішування
+				blocks[j] = blocks[j] ^ blocksOfKey[i]
+			}
+
+		}
+	}
+	// формування шифротексту шляхом приведення зашифрованих блоків до Гекс формату
 	for _, block := range blocks {
-		cipherText += fmt.Sprintf("%02x", Permutate_P_box(block, "in"))
+		cipherText += fmt.Sprintf("%02x", block)
 	}
 	return cipherText
 }
 
-func Decrypt_Pbox(cipherText string) string {
+// функція розшифрування
+func Decrypt_Pbox(cipherText, key string) string {
+	if len(key)%2 != 0 {
+		key = "0" + key
+	}
+
 	var plainText string
 
 	blocks := splitIntoBlocks(cipherText, "cipher")
+	blocksOfKey := splitIntoBlocks(key, "cipher")
+
+	rounds := len(blocksOfKey)
+
+	// зворотня операція "розмішування" результату XOR блоків з ключем
+	for i := rounds - 1; i >= 0; i-- {
+		for j := 0; j < len(blocks); j++ {
+			if i != 0 {
+				blocks[j] = Permutate_P_box(blocks[j]^blocksOfKey[i], "out")
+			} else {
+				// перший раунд алгоритму просто XOR без змішування
+				blocks[j] = blocks[j] ^ blocksOfKey[i]
+			}
+		}
+	}
 
 	for _, block := range blocks {
-		plainText += string(Permutate_P_box(block, "out"))
+		plainText += string(block)
 	}
 	return plainText
 }
 
 // функція для розбиття відкритого або шифро- тексту на блоки по 8 біт
 func splitIntoBlocks(text string, mode string) []byte {
+	// розбиття на 8-бітні блоки звичайного тексту
 	if mode == "plain" {
 		blocks := make([]byte, len(text))
 
@@ -36,6 +78,7 @@ func splitIntoBlocks(text string, mode string) []byte {
 		}
 
 		return blocks
+		// розбиття на 8-бітні блоки шифротексту
 	} else if mode == "cipher" {
 		blocks := make([]byte, len(text)/2)
 
@@ -61,6 +104,7 @@ func Permutate_P_box(block byte, mode string) byte {
 	return (nibble1 << 4) | nibble2
 }
 
+// функція перемішування/розмішування
 func shuffleBits(num byte, mode string) byte {
 	var bit1, bit2, bit3, bit4 byte
 	if mode == "in" {

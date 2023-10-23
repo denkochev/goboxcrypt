@@ -6,13 +6,12 @@ import (
 )
 
 func main() {
-	plainText := "ia"
+	plainText := "Hello World! My name is Den'ys"
+	key := "123"
 
-	cipherText := gocrypt.Encrypt_Pbox(plainText)
-	plain := gocrypt.Decrypt_Pbox(cipherText)
-	fmt.Println("cipher - ", cipherText)
-	fmt.Println("plain - ", plain)
-	//fmt.Println(gocrypt.HexToInt("96"))
-
-	//fmt.Println(gocrypt.Permutate_P_box(97, "in"))
+	cipherText := gocrypt.Encrypt_Pbox(plainText, key)
+	falsh := "123"
+	plain := gocrypt.Decrypt_Pbox(cipherText, falsh)
+	fmt.Println("cipher -", cipherText)
+	fmt.Println("plain -", plain)
 }
