@@ -70,6 +70,7 @@ Inverse S-box table
 
 For this algorithm I've used a similar technique as Sbox but instead substitution table there is permutation box with the next rule for each nibble:
 ![my_pbox_implementation](./imgs/my_pbox_implementation.png)
+
 Library API for Pbox algo:
 ```
 	cipher_Pbox := goboxcrypt.Encrypt_Pbox(plainText, key)
