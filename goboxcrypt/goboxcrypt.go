@@ -82,8 +82,6 @@ func Decrypt_Sbox(cipherText, key string) string {
 		key = "0" + key
 	}
 
-	var plainText string
-
 	blocks := splitIntoBlocks(cipherText, "cipher")
 	blocksOfKey := splitIntoBlocks(key, "cipher")
 
@@ -96,10 +94,7 @@ func Decrypt_Sbox(cipherText, key string) string {
 		}
 	}
 
-	for _, block := range blocks {
-		plainText += string(block)
-	}
-	return plainText
+	return string(blocks)
 }
 
 func swap_S_box(block byte, mode string) byte {
@@ -158,8 +153,6 @@ func Decrypt_Pbox(cipherText, key string) string {
 		key = "0" + key
 	}
 
-	var plainText string
-
 	blocks := splitIntoBlocks(cipherText, "cipher")
 	blocksOfKey := splitIntoBlocks(key, "cipher")
 
@@ -177,10 +170,7 @@ func Decrypt_Pbox(cipherText, key string) string {
 		}
 	}
 
-	for _, block := range blocks {
-		plainText += string(block)
-	}
-	return plainText
+	return string(blocks)
 }
 
 // функція для розбиття відкритого або шифро- тексту на блоки по 8 біт
