@@ -175,14 +175,9 @@ func Decrypt_Pbox(cipherText, key string) string {
 
 // функція для розбиття відкритого або шифро- тексту на блоки по 8 біт
 func splitIntoBlocks(text string, mode string) []byte {
-	// розбиття на 8-бітні блоки звичайного тексту
+	// розбиття на 8-бітні блоки відкритого тексту
 	if mode == "plain" {
-		blocks := make([]byte, len(text))
-
-		for i := 0; i < len(text); i++ {
-			blocks[i] = text[i]
-		}
-
+		blocks := []byte(text)
 		return blocks
 		// розбиття на 8-бітні блоки шифротексту
 	} else if mode == "cipher" {
